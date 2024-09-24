@@ -9,14 +9,21 @@ puppeteer.use(StealthPlugin());
 
     try {
         // Launch the browser in headless mode (can switch to false for debugging)
-        browser = await puppeteer.launch({ headless: false });
+        browser = await puppeteer.launch({ 
+            headless: false,
+            args: [
+                '--window-size=512,512',
+                '--disable-dev-shm-usage',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-blink-features=AutomationControlled',
+                '--mute-audio',
+                '--lang=en',
+                '--disable-sync',
+                '--ignore-certificate-errors',
+                '--disable-infobars'              ]
+         });
         const page = await browser.newPage();
-
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
-        await page.setExtraHTTPHeaders({
-            'Accept-Language': 'en-US,en;q=0.9',
-        });
-        await page.setViewport({ width: 1280, height: 800 });
 
         // Check and log IP using httpbin.org
         await page.goto('https://httpbin.org/ip', { waitUntil: 'networkidle2' });
@@ -26,9 +33,10 @@ puppeteer.use(StealthPlugin());
         // Navigate to the target page
         await page.goto('https://www.instafollowers.co/get-free-instagram-likes', { waitUntil: 'networkidle2' });
         await page.screenshot({ path: 'github_actions_screenshot.png', fullPage: true });
+        console.log('page loaded');
 
         // Wait for the input field with ID 'user' to be visible
-        await delay(20000);
+        await delay(3000);
         await page.waitForSelector('#user');
         const instagramUrl = 'https://www.instagram.com/p/DAPr2WwsGcy/';
         await page.type('#user', instagramUrl);
