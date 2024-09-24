@@ -1,0 +1,25 @@
+name: Instagram
+
+on:
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  roll:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install  # Install dependencies from package.json
+
+      - name: Run Instagram Bot
+        run: |
+          echo "Running Instagram bot with cookie 1."
+          node instagram.js
