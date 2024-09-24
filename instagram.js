@@ -10,8 +10,8 @@ puppeteer.use(StealthPlugin());
     try {
         // Launch the browser in headless mode (can switch to false for debugging)
         browser = await puppeteer.launch({ 
-            headless: false,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--proxy-server=socks5://127.0.0.1:9050'],
          });
         const page = await browser.newPage();
 
@@ -34,7 +34,7 @@ puppeteer.use(StealthPlugin());
         // Wait for the 'Get Free Likes' button to appear and click it
         await page.waitForSelector('.FreePostSubmitCapthcaButton');
         await page.click('.FreePostSubmitCapthcaButton');
-        await delay(60000);
+        await delay(70000);
 
         // Handle CAPTCHA if it appears
         await handleCaptcha(page);

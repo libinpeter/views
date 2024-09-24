@@ -16,22 +16,19 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install Tor
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tor
+          sudo systemctl start tor || sudo service tor start || echo "Tor start failed, continuing..."
+        continue-on-error: true  # Continue even if Tor installation fails
+
       - name: Install Dependencies
         run: npm install  # Install dependencies from package.json
 
-      # Install Xvfb
-      - name: Install Xvfb
-        run: sudo apt-get install -y xvfb
-
-      # Run Puppeteer with Xvfb
-      - name: Run Instagram Bot with Xvfb
+      - name: Run Instagram Bot
         run: |
-          # Start Xvfb in the background
-          Xvfb :99 -ac &
-          export DISPLAY=:99
-          
-          # Run Puppeteer script
-          echo "Running Instagram bot."
+          echo "Running Instagram."
           node instagram.js
 
       # Upload screenshots to GitHub Actions as artifacts
