@@ -22,7 +22,7 @@ puppeteer.use(StealthPlugin());
 
         // Navigate to the target page
         await page.goto('https://www.instafollowers.co/get-free-instagram-likes', { waitUntil: 'networkidle2' });
-        await delay(9000);
+        await delay(20000);
         await page.screenshot({ path: 'github_actions_screenshot.png', fullPage: true });
         console.log('page loaded');
 
