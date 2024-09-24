@@ -19,9 +19,19 @@ jobs:
       - name: Install Dependencies
         run: npm install  # Install dependencies from package.json
 
-      - name: Run Instagram Bot
+      # Install Xvfb
+      - name: Install Xvfb
+        run: sudo apt-get install -y xvfb
+
+      # Run Puppeteer with Xvfb
+      - name: Run Instagram Bot with Xvfb
         run: |
-          echo "Running Instagram."
+          # Start Xvfb in the background
+          Xvfb :99 -ac &
+          export DISPLAY=:99
+          
+          # Run Puppeteer script
+          echo "Running Instagram bot."
           node instagram.js
 
       # Upload screenshots to GitHub Actions as artifacts

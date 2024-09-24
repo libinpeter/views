@@ -23,6 +23,9 @@ puppeteer.use(StealthPlugin());
         const ipInfo = await page.evaluate(() => JSON.parse(document.body.innerText));
         console.log(`IP Address: ${ipInfo.origin}`);
 
+        await page.goto('https://freebitco.in', { waitUntil: 'networkidle2' });
+        console.log("FreeBitcoin page loaded.");
+
         // Navigate to the target page
         await page.goto('https://www.instafollowers.co/get-free-instagram-likes', { waitUntil: 'networkidle2' });
         await page.screenshot({ path: 'github_actions_screenshot.png', fullPage: true });
