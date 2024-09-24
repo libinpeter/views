@@ -21,5 +21,12 @@ jobs:
 
       - name: Run Instagram Bot
         run: |
-          echo "Running Instagram bot with cookie 1."
+          echo "Running Instagram."
           node instagram.js
+
+      # Upload screenshots to GitHub Actions as artifacts
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots
+          path: github_actions_screenshot.png

@@ -13,12 +13,11 @@ puppeteer.use(StealthPlugin());
         const page = await browser.newPage();
 
         // Navigate to the target page
-        await page.goto('https://www.instafollowers.co/get-free-instagram-likes');
+        await page.goto('https://www.instafollowers.co/get-free-instagram-likes', { waitUntil: 'networkidle2' });
+        await page.screenshot({ path: 'github_actions_screenshot.png', fullPage: true });
 
         // Wait for the input field with ID 'user' to be visible
         await page.waitForSelector('#user');
-
-        // Input the Instagram URL into the field
         const instagramUrl = 'https://www.instagram.com/p/DAPr2WwsGcy/';
         await page.type('#user', instagramUrl);
 
