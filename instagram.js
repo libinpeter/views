@@ -12,6 +12,17 @@ puppeteer.use(StealthPlugin());
         browser = await puppeteer.launch({ headless: true });
         const page = await browser.newPage();
 
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+        await page.setExtraHTTPHeaders({
+            'Accept-Language': 'en-US,en;q=0.9',
+        });
+        await page.setViewport({ width: 1280, height: 800 });
+
+        // Check and log IP using httpbin.org
+        await page.goto('https://httpbin.org/ip', { waitUntil: 'networkidle2' });
+        const ipInfo = await page.evaluate(() => JSON.parse(document.body.innerText));
+        console.log(`IP Address: ${ipInfo.origin}`);
+
         // Navigate to the target page
         await page.goto('https://www.instafollowers.co/get-free-instagram-likes', { waitUntil: 'networkidle2' });
         await page.screenshot({ path: 'github_actions_screenshot.png', fullPage: true });
