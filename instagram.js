@@ -11,13 +11,7 @@ puppeteer.use(StealthPlugin());
         // Launch the browser in headless mode (can switch to false for debugging)
         browser = await puppeteer.launch({ 
             headless: false,
-            args: [
-                '--enable-webgl',
-                '--ignore-gpu-blacklist',
-                '--use-gl=desktop',  // Forces a GPU context
-                '--disable-software-rasterizer',
-                '--no-sandbox',
-                '--disable-setuid-sandbox',           ]
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
          });
         const page = await browser.newPage();
 
