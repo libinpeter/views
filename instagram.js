@@ -30,9 +30,17 @@ puppeteer.use(StealthPlugin());
         const ipInfo = await page.evaluate(() => JSON.parse(document.body.innerText));
         console.log(`IP Address: ${ipInfo.origin}`);
 
+        // Simulate user scrolling and random delay
+        await simulateUserScroll(page);
+        await randomDelay(3000, 5000);
+        await simulateMouseMove(page, 100, 100, 400, 300); // Move from point A to point B
+
         // Navigate to the target page
         await page.goto('https://www.instafollowers.co/get-free-instagram-likes', { waitUntil: 'networkidle2' });
         // Take a screenshot after interaction
+        await simulateUserScroll(page);
+        await randomDelay(3000, 5000);
+        await simulateMouseMove(page, 100, 100, 400, 300); // Move from point A to point B
         await page.screenshot({ path: 'github_actions_screenshot1.png', fullPage: true });
         console.log('Page interaction completed.');
 
