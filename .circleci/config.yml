@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: circleci/node:20.0.0
+      - image: circleci/node:16.17  # Available CircleCI Node.js image
     working_directory: ~/project
 
 jobs:
