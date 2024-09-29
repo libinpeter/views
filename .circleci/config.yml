@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: cimg/node:20.0.0  # Use the new cimg/node image
+      - image: cimg/node:20.0.0  # Using the new cimg/node image
     working_directory: ~/project
 
 jobs:
@@ -13,21 +13,41 @@ jobs:
     steps:
       - checkout  # Checkout the code from your repository
 
+      # Install required dependencies for Puppeteer/Chromium
+      - run:
+          name: Install Chromium Dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y \
+              libnss3 \
+              libxss1 \
+              libasound2 \
+              fonts-liberation \
+              libappindicator3-1 \
+              libatk-bridge2.0-0 \
+              libgtk-3-0 \
+              libxshmfence1 \
+              libgbm1
+
+      # Install Node.js dependencies
       - run:
           name: Install Node.js dependencies
           command: npm install  # Install dependencies
 
+      # Run Instagram bot script
       - run:
           name: Run Instagram Bot
           command: |
             echo "Running Instagram."
             node instagram.js
 
+      # Upload PNG screenshots as artifacts
       - run:
           name: Upload PNG screenshots as artifacts
           command: |
             mkdir -p ~/artifacts
             mv *.png ~/artifacts
+
       - store_artifacts:
           path: ~/artifacts
           destination: screenshots
